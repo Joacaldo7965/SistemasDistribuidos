@@ -128,7 +128,7 @@ func main() {
 					time.Sleep(5 * time.Second)
 					break
 				}
-				//time.Sleep(5 * time.Second)
+				time.Sleep(5 * time.Second)
 			}
 
 			fmt.Println("Finalizó el trabajo del escuadrón " + squadSend)
