@@ -29,10 +29,7 @@ func (s *server) Intercambio(ctx context.Context, msg *pb.Message) (*pb.Message,
 	// TODO: ver donde poner el mensaje cuando llega el escuadrón y obtener el nombre X
 	// fmt.Println("Llega Escuadrón X, conteniendo estallido...")
 
-	//fmt.Print("\t" + msg.Body + ": ")
-
 	// Probabilidad de contencion
-	fmt.Println()
 	if rand.Float64() < 0.6 {
 		fmt.Println("Revisando estado Escuadrón: LISTO")
 
