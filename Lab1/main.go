@@ -26,15 +26,22 @@ func (s *server) Intercambio(ctx context.Context, msg *pb.Message) (*pb.Message,
 		return &pb.Message{Body: ""}, nil
 	}
 
-	fmt.Print("\t" + msg.Body + ": ")
+	// TODO: ver donde poner el mensaje cuando llega el escuadrón y obtener el nombre X
+	// fmt.Println("Llega Escuadrón X, conteniendo estallido...")
+
+	//fmt.Print("\t" + msg.Body + ": ")
 
 	// Probabilidad de contencion
+	fmt.Println()
 	if rand.Float64() < 0.6 {
-		fmt.Println("SI")
-		fmt.Println("Devolviendo escuadron")
+		fmt.Println("Revisando estado Escuadrón: LISTO")
+
+		// TODO: obtener nombre escuadrón X
+		fmt.Println("Estallido contenido, Escuadrón X Retornando")
+
 		return &pb.Message{Body: "SI"}, nil
 	} else {
-		fmt.Println("NO")
+		fmt.Println("Revisando estado Escuadrón: NO LISTO")
 		return &pb.Message{Body: "NO"}, nil
 	}
 }
@@ -66,7 +73,9 @@ func main() {
 		time.Sleep(5 * time.Second)
 
 		if rand.Float64() < 0.8 { // Sucede estallido
-			fmt.Println("------------------------\nSucede estallido social")
+			//fmt.Println("------------------------\nSucede estallido social")
+			fmt.Println("Analizando estado Laboratorio: ESTALLIDO")
+
 			// Se genera y envia una solicitud con el nombre del lab
 			err = ch.Publish("", qName, false, false,
 				amqp.Publishing{
@@ -74,10 +83,11 @@ func main() {
 					ContentType: "text/plain",
 					Body:        []byte(labName), //Contenido del mensaje
 				})
-
 			if err != nil {
 				log.Fatal(err)
 			}
+
+			fmt.Println("SOS Enviado a Central. Esperando respuesta...")
 
 			// Escuchando respuesta
 			listener, err := net.Listen("tcp", ":50054") //conexion sincrona
@@ -92,8 +102,11 @@ func main() {
 			if err = serv.Serve(listener); err != nil {
 				panic("El server no se pudo iniciar" + err.Error())
 			}
+
+		} else {
+			// fmt.Println("------------------------\nNo pasa nada")
+			fmt.Println("Analizando estado Laboratorio: OK")
 		}
-		fmt.Println("------------------------\nNo pasa nada")
 
 	}
 
