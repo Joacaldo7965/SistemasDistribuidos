@@ -77,7 +77,7 @@ func main() {
 			fmt.Println("------------------------\nHost: " + labHost + "\nPort: " + labPort)
 
 			// BORRAR ESTA COSAAAA
-			labHost = "localhost"
+			//labHost = "localhost"
 
 			conn, err := grpc.Dial(labHost+labPort, grpc.WithInsecure()) //crea la conexion sincrona con el laboratorio
 			if err != nil {
