@@ -47,7 +47,7 @@ func main() {
 	// Random seed
 	rand.Seed(time.Now().UnixNano())
 
-	labName := "Renca"                                             //nombre del laboratorio
+	labName := "Pripiat"                                           //nombre del laboratorio
 	qName := "Emergencias"                                         //nombre de la cola
 	hostQ := "dist145"                                             //ip del servidor de RabbitMQ 172.17.0.1
 	connQ, err := amqp.Dial("amqp://test:test@" + hostQ + ":5672") //conexion con RabbitMQ
@@ -84,7 +84,7 @@ func main() {
 			fmt.Println("SOS Enviado a Central. Esperando respuesta...")
 
 			// Escuchando respuesta
-			listener, err := net.Listen("tcp", ":50051") //conexion sincrona
+			listener, err := net.Listen("tcp", ":50054") //conexion sincrona
 			if err != nil {
 				panic("La conexion no se pudo crear" + err.Error())
 			}
