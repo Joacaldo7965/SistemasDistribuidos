@@ -9,5 +9,14 @@ central:
 
 laboratorio:
 ifeq ($(HOST),dist145)
-	@echo "lol"
+	go run Lab1/main.go
+endif
+ifeq ($(HOST),dist146)
+	go run Lab2/main.go
+endif
+ifeq ($(HOST),dist147)
+	go run Lab3/main.go
+endif
+ifeq ($(HOST),dist148)
+	go run Lab4/main.go
 endif
