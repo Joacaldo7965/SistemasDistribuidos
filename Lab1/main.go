@@ -21,21 +21,20 @@ type server struct {
 
 func (s *server) Intercambio(ctx context.Context, msg *pb.Message) (*pb.Message, error) {
 
-	fmt.Println(msg.Body)
-
 	if msg.Body == "STOP" {
 		serv.Stop()
 		return &pb.Message{Body: ""}, nil
 	}
 
+	fmt.Print("\t" + msg.Body + ": ")
+
 	// Probabilidad de contencion
 	if rand.Float64() < 0.6 {
-		fmt.Println("Si!")
-		fmt.Println("Devolviendo escuadron " + "TODO")
-		fmt.Println("---------------------------------------------\n")
+		fmt.Println("SI")
+		fmt.Println("Devolviendo escuadron")
 		return &pb.Message{Body: "SI"}, nil
 	} else {
-		fmt.Println("No :c")
+		fmt.Println("NO")
 		return &pb.Message{Body: "NO"}, nil
 	}
 }
@@ -46,7 +45,7 @@ func main() {
 
 	labName := "Pripiat"                                             //nombre del laboratorio
 	qName := "Emergencias"                                           //nombre de la cola
-	hostQ := "localhost"                                             //ip del servidor de RabbitMQ 172.17.0.1
+	hostQ := "dist148"                                               //ip del servidor de RabbitMQ 172.17.0.1
 	connQ, err := amqp.Dial("amqp://guest:guest@" + hostQ + ":5672") //conexion con RabbitMQ
 
 	if err != nil {
@@ -67,7 +66,7 @@ func main() {
 		time.Sleep(5 * time.Second)
 
 		if rand.Float64() < 0.8 { // Sucede estallido
-			fmt.Println("sucede estallido social")
+			fmt.Println("------------------------\nSucede estallido social")
 			// Se genera y envia una solicitud con el nombre del lab
 			err = ch.Publish("", qName, false, false,
 				amqp.Publishing{
@@ -94,7 +93,7 @@ func main() {
 				panic("El server no se pudo iniciar" + err.Error())
 			}
 		}
-		fmt.Println("not (sucede estallido social)")
+		fmt.Println("------------------------\nNo pasa nada")
 
 	}
 

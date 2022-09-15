@@ -16,7 +16,7 @@ var n_merc int
 
 func main() {
 	qName := "Emergencias" //Nombre de la cola
-	hostQ := "localhost"   //Host de RabbitMQ 172.17.0.1
+	hostQ := "dist145"     //Host de RabbitMQ 172.17.0.1
 	//hostS := "localhost"   //Host de un Laboratorio
 	n_merc = 2
 
@@ -38,10 +38,11 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	ch.QueuePurge(qName, false)
 	fmt.Println(q)
 
 	// Sucede la magia
-	fmt.Println("Esperando Emergencias")
+	fmt.Println("Esperando Emergencias\n")
 	chDelivery, err := ch.Consume(qName, "", true, false, false, false, nil) //obtiene la cola de RabbitMQ
 	if err != nil {
 		log.Fatal(err)
@@ -73,7 +74,7 @@ func main() {
 				fmt.Println("Error al asignar los puertos y el host!")
 			}
 
-			fmt.Println("Host: " + labHost + "\nPort: " + labPort)
+			fmt.Println("------------------------\nHost: " + labHost + "\nPort: " + labPort)
 
 			// BORRAR ESTA COSAAAA
 			labHost = "localhost"
@@ -106,7 +107,7 @@ func main() {
 				}
 				consultas++
 
-				fmt.Println("Estallido resuelto?: " + res.Body)
+				fmt.Println("\tEstallido resuelto?: " + res.Body)
 
 				if res.Body == "SI" { // Se resolvio el estallido
 					// TODO: Informar que squad volvio
