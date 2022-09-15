@@ -21,7 +21,7 @@ func main() {
 	n_merc = 2
 
 	//Conexion con RabbitMQ
-	connQ, err := amqp.Dial("amqp://guest:guest@" + hostQ + ":5672")
+	connQ, err := amqp.Dial("amqp://test:test@" + hostQ + ":5672")
 	if err != nil {
 		log.Fatal(err)
 	}

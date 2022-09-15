@@ -43,10 +43,10 @@ func main() {
 	// Random seed
 	rand.Seed(time.Now().UnixNano())
 
-	labName := "Pripiat"                                             //nombre del laboratorio
-	qName := "Emergencias"                                           //nombre de la cola
-	hostQ := "dist148"                                               //ip del servidor de RabbitMQ 172.17.0.1
-	connQ, err := amqp.Dial("amqp://guest:guest@" + hostQ + ":5672") //conexion con RabbitMQ
+	labName := "Pripiat"                                           //nombre del laboratorio
+	qName := "Emergencias"                                         //nombre de la cola
+	hostQ := "dist148"                                             //ip del servidor de RabbitMQ 172.17.0.1
+	connQ, err := amqp.Dial("amqp://test:test@" + hostQ + ":5672") //conexion con RabbitMQ
 
 	if err != nil {
 		log.Fatal(err)
