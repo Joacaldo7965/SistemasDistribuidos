@@ -119,6 +119,7 @@ func main() {
 						&pb.Message{
 							Body: "STOP",
 						})
+					time.Sleep(5 * time.Second)
 					// if conn.GetState().String() != "IDLE" {
 					// 	panic("No se puede cerrar la conexion " + err.Error())
 					// }
@@ -126,7 +127,7 @@ func main() {
 					fmt.Println("conn state: " + conn.GetState().String())
 
 					// TODO: Escribir en el archivo "SOLICITUDES.txt"
-					//time.Sleep(5 * time.Second)
+
 					break
 				}
 				time.Sleep(5 * time.Second)
