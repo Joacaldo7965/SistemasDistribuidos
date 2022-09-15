@@ -9,5 +9,5 @@ central:
 
 laboratorio:
 	ifeq ($(HOST),dist145)
-		@echo "lol"
+	@echo "lol"
 	endif
