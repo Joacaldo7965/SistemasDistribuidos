@@ -39,6 +39,7 @@ func main() {
 		log.Fatal(err)
 	}
 	ch.QueuePurge(qName, true)
+	time.Sleep(2 * time.Second) // wait to purge queue
 	fmt.Println(q)
 
 	// Sucede la magia
