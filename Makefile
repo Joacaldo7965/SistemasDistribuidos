@@ -8,6 +8,6 @@ central:
 	go run Central/main.go
 
 laboratorio:
-ifeq($(HOST),dist145)
+ifeq ($(HOST),dist145)
 	@echo "lol"
 endif
