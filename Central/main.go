@@ -74,10 +74,9 @@ func main() {
 				fmt.Println("Error al asignar los puertos y el host!")
 			}
 
-			fmt.Println("------------------------\nHost: " + labHost + "\nPort: " + labPort)
-
-			// BORRAR ESTA COSAAAA
-			//labHost = "localhost"
+			// fmt.Println("------------------------\nHost: " + labHost + "\nPort: " + labPort)
+			fmt.Println("------------------------\n" +
+				"Mensaje asíncrono de laboratorio " + labName + " leído")
 
 			conn, err := grpc.Dial(labHost+labPort, grpc.WithInsecure()) //crea la conexion sincrona con el laboratorio
 			if err != nil {
@@ -88,7 +87,7 @@ func main() {
 			serviceCliente := pb.NewMessageServiceClient(conn)
 
 			squadSend := strconv.Itoa(n_merc)
-			fmt.Println("mandando el squad " + squadSend)
+			fmt.Println("Se envía Escuadra " + squadSend + " a Laboratorio " + labName)
 
 			n_merc--
 			consultas := 0
@@ -96,7 +95,8 @@ func main() {
 			for {
 				// TODO: informar del escuadron mandado
 
-				time.Sleep(5 * time.Second)
+				//time.Sleep(5 * time.Second) // TODO: check if this is needed
+
 				// Envio del mensaje al lab
 				res, err := serviceCliente.Intercambio(context.Background(),
 					&pb.Message{
@@ -107,24 +107,28 @@ func main() {
 				}
 				consultas++
 
-				fmt.Println("\tEstallido resuelto?: " + res.Body)
+				//fmt.Println("\tEstallido resuelto?: " + res.Body)
+				fmt.Println("Status Escuadra " + squadSend + ": " + res.Body)
 
 				if res.Body == "SI" { // Se resolvio el estallido
-					// TODO: Informar que squad volvio
+
+					// Agregar el squad que volvio
 					n_merc++
 
-					// TODO: Cerrar la conexión
-					fmt.Println("Cerrando conexion con " + labName)
+					// Cerrar la conexión
+					//fmt.Println("Cerrando conexion con " + labName)
 					_, err := serviceCliente.Intercambio(context.Background(),
 						&pb.Message{
 							Body: "STOP",
 						})
-					time.Sleep(5 * time.Second)
-					// if conn.GetState().String() != "IDLE" {
-					// 	panic("No se puede cerrar la conexion " + err.Error())
-					// }
-					fmt.Println("error: " + err.Error())
-					fmt.Println("conn state: " + conn.GetState().String())
+					time.Sleep(5 * time.Second) // Esperar a que el estado cambie
+					if conn.GetState().String() != "IDLE" {
+						panic("No se puede cerrar la conexion " + err.Error())
+					}
+
+					// Informar que squad volvio
+					fmt.Println("Retorno a Central Escuadra " + squadSend +
+						", Conexión Laboratorio " + labName + " Cerrada")
 
 					// TODO: Escribir en el archivo "SOLICITUDES.txt"
 
@@ -133,7 +137,7 @@ func main() {
 				time.Sleep(5 * time.Second)
 			}
 
-			fmt.Println("Finalizó el trabajo del escuadrón " + squadSend)
+			//fmt.Println("Finalizó el trabajo del escuadrón " + squadSend)
 
 		}
 	}
