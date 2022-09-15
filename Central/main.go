@@ -38,7 +38,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	ch.QueuePurge(qName, false)
+	ch.QueuePurge(qName, true)
 	fmt.Println(q)
 
 	// Sucede la magia
