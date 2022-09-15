@@ -125,7 +125,7 @@ func main() {
 					fmt.Println(err)
 
 					// TODO: Escribir en el archivo "SOLICITUDES.txt"
-					time.Sleep(5 * time.Second)
+					//time.Sleep(5 * time.Second)
 					break
 				}
 				time.Sleep(5 * time.Second)
