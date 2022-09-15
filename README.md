@@ -1,17 +1,31 @@
 # SistemasDistribuidos
 
-## Docker
+## Integrantes
+Joaquin Calderon 201973571-3
 
-docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
+## Asignación de las máquinas
+Las máquinas utilizadas corresponden a dist145, dist146, dist147 y dist148. Estas fueron distribuidas de la siguiente forma:
 
-## Go
+- dist145: Central y Laboratorio Renca
+- dist146: Laboratorio Pohang
+- dist147: Laboratorio Kampala
+- dist148: Laboratorio Pripiat
 
-go run Central/main.go
+## Ejecución
 
-go run Lab1/main.go
+Se deberá conectar a las máquinas mencionadas anteriormente mediante ssh 5 veces, 1 para la Central y 4 para los Laboratorios. Luego en donde corresponda se deberá ejecutar los códigos para Central o Laboratorio.
 
-go run Lab2/main.go
+### Central
+Primero se deberá activar la central.
 
-go run Lab3/main.go
+Para ejecutar el código de la central se deberá ejecutar la siguiente línea en la máquina:
+```
+make central
+```
+### Laboratorio
+Cuando ya esté ejecutandose la central, iniciaremos los laboratorios.
 
-go run Lab4/main.go
+Para ejecutar el código de los Laboratorios se deberá ejecutar la siguiente línea en cada máquina:
+```
+make laboratorio
+```

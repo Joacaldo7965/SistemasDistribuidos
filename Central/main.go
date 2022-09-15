@@ -12,6 +12,7 @@ import (
 	"google.golang.org/grpc"
 )
 
+// TODO: Buscar otra forma de hacer esto
 var n_merc int
 
 func main() {
