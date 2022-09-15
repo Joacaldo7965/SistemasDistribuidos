@@ -39,10 +39,10 @@ func (s *server) Intercambio(ctx context.Context, msg *pb.Message) (*pb.Message,
 		// TODO: obtener nombre escuadrón X
 		fmt.Println("Estallido contenido, Escuadrón X Retornando")
 
-		return &pb.Message{Body: "SI"}, nil
+		return &pb.Message{Body: "LISTO"}, nil
 	} else {
 		fmt.Println("Revisando estado Escuadrón: NO LISTO")
-		return &pb.Message{Body: "NO"}, nil
+		return &pb.Message{Body: "NO LISTO"}, nil
 	}
 }
 
@@ -66,14 +66,11 @@ func main() {
 	}
 	defer ch.Close()
 
-	fmt.Println("se prendio la wea")
-
 	for {
 		// Every 5 seconds
 		time.Sleep(5 * time.Second)
 
 		if rand.Float64() < 0.8 { // Sucede estallido
-			//fmt.Println("------------------------\nSucede estallido social")
 			fmt.Println("Analizando estado Laboratorio: ESTALLIDO")
 
 			// Se genera y envia una solicitud con el nombre del lab
@@ -104,7 +101,6 @@ func main() {
 			}
 
 		} else {
-			// fmt.Println("------------------------\nNo pasa nada")
 			fmt.Println("Analizando estado Laboratorio: OK")
 		}
 

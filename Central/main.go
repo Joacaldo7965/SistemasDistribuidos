@@ -42,7 +42,7 @@ func main() {
 	fmt.Println(q)
 
 	// Sucede la magia
-	fmt.Println("Esperando Emergencias\n")
+	fmt.Println("Esperando Emergencias")
 	chDelivery, err := ch.Consume(qName, "", true, false, false, false, nil) //obtiene la cola de RabbitMQ
 	if err != nil {
 		log.Fatal(err)
@@ -78,7 +78,8 @@ func main() {
 			fmt.Println("------------------------\n" +
 				"Mensaje asíncrono de laboratorio " + labName + " leído")
 
-			conn, err := grpc.Dial(labHost+labPort, grpc.WithInsecure()) //crea la conexion sincrona con el laboratorio
+			// Crea la conexion sincrona con el laboratorio
+			conn, err := grpc.Dial(labHost+labPort, grpc.WithInsecure())
 			if err != nil {
 				panic("No se pudo conectar con el servidor" + err.Error())
 			}
@@ -95,7 +96,7 @@ func main() {
 			for {
 				// TODO: informar del escuadron mandado
 
-				//time.Sleep(5 * time.Second) // TODO: check if this is needed
+				//time.Sleep(5 * time.Second) // TODO: ver si es necesario
 
 				// Envio del mensaje al lab
 				res, err := serviceCliente.Intercambio(context.Background(),
@@ -107,21 +108,21 @@ func main() {
 				}
 				consultas++
 
-				//fmt.Println("\tEstallido resuelto?: " + res.Body)
 				fmt.Println("Status Escuadra " + squadSend + ": " + res.Body)
 
-				if res.Body == "SI" { // Se resolvio el estallido
+				if res.Body == "LISTO" { // Se resolvio el estallido
 
 					// Agregar el squad que volvio
 					n_merc++
 
 					// Cerrar la conexión
-					//fmt.Println("Cerrando conexion con " + labName)
 					_, err := serviceCliente.Intercambio(context.Background(),
 						&pb.Message{
 							Body: "STOP",
 						})
+
 					time.Sleep(5 * time.Second) // Esperar a que el estado cambie
+
 					if conn.GetState().String() != "IDLE" {
 						panic("No se puede cerrar la conexion " + err.Error())
 					}
@@ -136,9 +137,6 @@ func main() {
 				}
 				time.Sleep(5 * time.Second)
 			}
-
-			//fmt.Println("Finalizó el trabajo del escuadrón " + squadSend)
-
 		}
 	}
 	fmt.Println("fin?")
